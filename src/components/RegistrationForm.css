@@ -1,0 +1,122 @@
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-image: linear-gradient(to right, rgb(228, 224, 255), rgb(157, 150, 255));
+    border: 1px solid #e19aff;
+    border-radius: 15px;
+    position: relative;
+}
+
+.container h2 {
+    text-align: center;
+    color: rgb(77, 19, 202);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin: 8px 0 3px 13px;
+    font-weight: bold;
+    color: rgb(0, 12, 143);
+}
+
+.form-group input,
+.form-group select {
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin: 10px;
+    outline: unset;
+}
+/* .select-options {
+    width: 95%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: unset;
+    margin-left: 10px;
+} */
+.form-group input:focus,
+.form-group select:focus {
+    outline: 1px rgb(108, 108, 223) solid;
+}
+.form-group input[type="file"] {
+    background-color: #a682fb63;
+}
+
+.form-group input[type="file"]::-webkit-file-upload-button {
+    text-align: center;
+    width: 110%;
+    overflow: hidden;
+    background-color: unset;
+    color: white;
+    outline: unset;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-group input[type="date"] {
+    padding: 10px;
+}
+
+h3.error {
+    color: rgb(198, 12, 12);
+    font-size: 16px;
+    margin: 15px 0 20px 20px;
+}
+
+button[type="submit"],
+.confirm-button {
+    padding: 10px 20px;
+    background-color: #3e51ca;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 8px 0 5px 12px;
+}
+
+button[type="submit"]:hover,
+.confirm-button:hover {
+    background-color: #2b5b9a;
+}
+.go-back-button {
+    padding: 10px 20px;
+    background-color: #3e51ca;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+float: right;
+margin-right: 12px;
+}
+.go-back-button:hover {
+    background-color: #2b5b9a;
+}
+table {
+    margin-top: 20px;
+    width: 100%;
+}
+
+table td {
+    padding: 5px 10px;
+}
+
+table td:first-child {
+    font-weight: bold;
+}
+.id-card {
+    width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    margin: 20px 0;
+}

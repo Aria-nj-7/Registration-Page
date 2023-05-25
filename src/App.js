@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import RegistrationForm from './components/RegistrationForm';
+import RegistrationConfirmation from './components/RegistrationConfirmation';
+import RegistrationSuccess from './components/RegistrationSuccess';
 
-function App() {
+const App = () => {
+  const { isRegistered, isConfirmed, isSubmitting, error } = useSelector(
+    (state) => state
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {!isRegistered && !isConfirmed && <RegistrationForm />}
+      {isRegistered && !isConfirmed && <RegistrationConfirmation />}
+      {isConfirmed && <RegistrationSuccess />}
+      {isSubmitting && <p>Submitting registration...</p>}
+      {error && <p>Error: {error}</p>}
     </div>
   );
-}
+};
 
 export default App;
