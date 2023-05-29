@@ -3,49 +3,7 @@ import './RegistrationForm.css';
 import { differenceInYears } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { submitRegistration } from '../redux/actions';
-
-const ConfirmationPage = ({ data, onConfirmation, onGoBack }) => {
-  document.getElementById('title-h2').style.display = 'none';
-  return (
-    <div>
-      <h2>Confirmation Page</h2>
-      <table>
-        <tbody>
-          <tr>
-            <td>Name :</td>
-            <td>{data.name + ' ' + data.family}</td>
-          </tr>
-          <tr>
-            <td>Gender :</td>
-            <td>{data.gender}</td>
-          </tr>
-          <tr>
-            <td>Date of Birth :</td>
-            <td>{data.birthday}</td>
-          </tr>
-          <tr>
-            <td>ID Image :</td>
-            <td>
-              <img src={data.idImage} alt='ID Card' className='id-card' />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p>Please confirm the information above.</p>
-      <button onClick={onConfirmation} className='confirm-button'>
-        Confirm
-      </button>
-      <button onClick={onGoBack} className='go-back-button'>
-        Go Back
-      </button>
-    </div>
-  );
-};
-
-const validateAge = (birthday) => {
-  const age = differenceInYears(new Date(), new Date(birthday));
-  return age >= 18;
-};
+import ConfirmationPage from './ConfirmationPage';
 
 const RegistrationForm = () => {
   const [name, setName] = useState('');
@@ -53,9 +11,16 @@ const RegistrationForm = () => {
   const [gender, setGender] = useState('');
   const [birthday, setBirthday] = useState('');
   const [idImage, setIdImage] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState(null);
   const [error, setError] = useState('');
+  const [isConfirmationPageVisible, setConfirmationPageVisible] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const validateAge = (birthday) => {
+    const currentDate = new Date();
+    const birthDate = new Date(birthday);
+    return differenceInYears(currentDate, birthDate) >= 18;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,71 +33,68 @@ const RegistrationForm = () => {
       return;
     }
 
-    setFormData({
+    const imageFile = e.target.querySelector('input[type="file"]').files[0];
+    if (imageFile && imageFile.size > 1024 * 1024) {
+      setError('Image size should be less than 1MB');
+      return;
+    }
+    
+    setConfirmationPageVisible(true);
+  };
+
+  const handleConfirm = () => {
+    const formData = {
       name,
       family,
       gender,
       birthday,
       idImage
-    });
+    };
 
-    setIsSubmitted(true);
-  };
-  const dispatch = useDispatch();
-
-  const handleConfirmation = () => {
     dispatch(submitRegistration(formData));
-    setFormData(null);
-    setIsSubmitted(false);
+    setConfirmationPageVisible(false);
   };
 
   const handleGoBack = () => {
-    setFormData(null);
-    setIsSubmitted(false);
+    setConfirmationPageVisible(false);
   };
 
   return (
     <div className='container'>
       <h2 id='title-h2'>Registration Form</h2>
-      {!isSubmitted ? (
+      {!isConfirmationPageVisible && (
         <form className='form-group' onSubmit={handleSubmit}>
-          <label>
-            First Name :
-          </label>
+          <label>First Name:</label>
           <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
-          <label>
-            Last Name :
-          </label>
+          <label>Last Name:</label>
           <input type='text' value={family} onChange={(e) => setFamily(e.target.value)} />
-          <label>
-            Gender :
-          </label>
-          <select value={gender} onChange={(e) => setGender(e.target.value)} style={{ width: "95%" }}>
+          <label>Gender:</label>
+          <select value={gender} onChange={(e) => setGender(e.target.value)} style={{ width: '95%' }}>
             <option value=''>Select</option>
             <option value='male'>Male</option>
             <option value='female'>Female</option>
             <option value='other'>Other</option>
           </select>
-
-          <label>
-            Birthday :
-          </label>
+          <label>Birthday:</label>
           <input type='date' value={birthday} onChange={(e) => setBirthday(e.target.value)} />
-
-          <label>
-            ID Image :
-          </label>
+          <label>ID Image:</label>
           <input type='file' accept='.jpg' onChange={(e) => setIdImage(URL.createObjectURL(e.target.files[0]))} />
-
           {error && <p className='error'>{error}</p>}
           <button type='submit' className='submit-button'>
             Submit
           </button>
         </form>
-      ) : (
+      )}
+      {isConfirmationPageVisible && (
         <ConfirmationPage
-          data={formData}
-          onConfirmation={handleConfirmation}
+          data={{
+            name: name,
+            family: family,
+            gender: gender,
+            birthday: birthday,
+            idImage: idImage
+          }}
+          onConfirmation={handleConfirm}
           onGoBack={handleGoBack}
         />
       )}

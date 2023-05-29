@@ -1,6 +1,5 @@
 import {
   REGISTER_USER,
-  CONFIRM_REGISTRATION,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE,
 } from './constance';
@@ -8,7 +7,6 @@ import {
 const initialState = {
   user: null,
   isRegistered: false,
-  isConfirmed: false,
   isSubmitting: false,
   error: null,
 };
@@ -20,18 +18,13 @@ const registrationReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
         isRegistered: true,
-        isConfirmed: false,
-      };
-    case CONFIRM_REGISTRATION:
-      return {
-        ...state,
-        isConfirmed: true,
+        isSubmitting: true,
+        error: null,
       };
     case REGISTRATION_SUCCESS:
       return {
         ...state,
         isSubmitting: false,
-        error: null,
       };
     case REGISTRATION_FAILURE:
       return {

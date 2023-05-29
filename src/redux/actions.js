@@ -29,10 +29,6 @@ export const submitRegistration = (user) => {
     try {
       dispatch(registerUser(user));
 
-      if (user.idPhoto.size > 1020000 || user.idPhoto.type !== 'image/jpeg') {
-        throw new Error('Invalid id photo');
-      }
-
       await new Promise((resolve) => setTimeout(resolve, 5000));
 
       const response = await axios.post(
