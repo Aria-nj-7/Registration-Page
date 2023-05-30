@@ -10,8 +10,8 @@ const App = () => {
     <div>
       {!isRegistered && <RegistrationForm />}
       {isSubmitting && <p>Submitting registration...</p>}
-      {error && <p>Error: {error}</p>}
-      {isRegistered && <RegistrationSuccess />}
+      {!isSubmitting && error && <p>Registration failed : {error}</p>}
+      {isRegistered && !isSubmitting && !error && <RegistrationSuccess />}
     </div>
   );
 };

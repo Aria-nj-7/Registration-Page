@@ -1,7 +1,9 @@
 import React from 'react';
 import './RegistrationForm.css';
+import { differenceInYears } from 'date-fns';
 
 const ConfirmationPage = ({ data, onConfirmation, onGoBack }) => {
+  document.getElementById('title-h2').style.display = 'none' ;
   return (
     <div className='confirmation-container'>
       <h2 className='confirmation-title'>Confirmation Page</h2>
@@ -16,9 +18,14 @@ const ConfirmationPage = ({ data, onConfirmation, onGoBack }) => {
             <td>{data.gender}</td>
           </tr>
           <tr>
-            <td>Date of Birth :</td>
+            <td>Birthday :</td>
             <td>{data.birthday}</td>
           </tr>
+          <tr>
+            <td>Age :</td>
+            <td>{differenceInYears(new Date(), new Date(data.birthday))}</td>
+          </tr>
+
           <tr>
             <td>ID Image :</td>
             <td>

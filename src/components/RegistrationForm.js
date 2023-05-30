@@ -17,19 +17,18 @@ const RegistrationForm = () => {
   const dispatch = useDispatch();
 
   const validateAge = (birthday) => {
-    const currentDate = new Date();
-    const birthDate = new Date(birthday);
-    return differenceInYears(currentDate, birthDate) >= 18;
+    return differenceInYears(
+      new Date(), new Date(birthday)) >= 18;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !family || !gender || !birthday || !idImage) {
-      setError('Please fill in all fields');
+      setError('* Please fill in all fields');
       return;
     }
     if (!validateAge(birthday)) {
-      setError('You must be at least 18 years old');
+      setError('* You must be at least 18 years old');
       return;
     }
 
@@ -38,7 +37,7 @@ const RegistrationForm = () => {
       setError('Image size should be less than 1MB');
       return;
     }
-    
+
     setConfirmationPageVisible(true);
   };
 
